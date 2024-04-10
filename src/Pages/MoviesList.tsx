@@ -11,30 +11,11 @@ import {
     Pagination,
     Typography,
 } from '@mui/material'
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// const API_URL = 'https://api.kinopoisk.dev/v1.4/movie/12123'
-
-// const api = createApi({
-//     reducerPath: 'api',
-//     baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
-//     endpoints: (builder) => ({
-//         getPokemonByName: builder.query({
-//             query: (movie) => ({
-//                 url: `https://api.kinopoisk.dev/v1.4/${movie}`,
-//                 headers: 'WF76VQQ-HQB4P5G-JFJH8DF-CRKDP1M',
-//             }),
-//         }),
-//     }),
-// })
-// const { useGetFilmByIdQuery } = api
-// console.log(api)
-
-// const getContent = () =>
-// {
-//     fetch('https://api.kinopoisk.dev/v1.4/movie/12123', { headers:{'X-API-KEY': 'WF76VQQ-HQB4P5G-JFJH8DF-CRKDP1M'})
-// }
+import { useFetchMovieQuery } from '../api/kinopoiskApi'
 
 const MoviesList = () => {
+    const { data = [], isLoading } = useFetchMovieQuery(12)
+    console.log(data, isLoading)
     const { login, password } = useAppSelector((state) => state.movies.user)
     if (!login && !password) return <Navigate to={'/auth'} />
     return (

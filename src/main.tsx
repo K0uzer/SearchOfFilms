@@ -8,7 +8,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
 
-
 const router = createBrowserRouter([
     {
         path: '/auth',
