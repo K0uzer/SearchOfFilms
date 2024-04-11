@@ -1,88 +1,84 @@
 import React from 'react'
 import { useAppSelector } from '../app/hooks'
 import { Navigate } from 'react-router'
-import SearchAppBar from '../UI/SearchAppBar'
-import FloatingActionButtonExtendedSize from '../UI/FloatingActionButtonExtendedSize'
-import BasicSelect from '../UI/BasicSelect'
-import {
-    Button,
-    CardActions,
-    CardContent,
-    Pagination,
-    Typography,
-} from '@mui/material'
 import { useFetchMovieQuery } from '../api/kinopoiskApi'
+import { Avatar, List, Space } from 'antd'
+import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
+import Header from '../Components/Header'
 
+const data = Array.from({ length: 23 }).map((_, i) => ({
+    href: 'https://ant.design',
+    title: `ant design part ${i}`,
+    avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${i}`,
+    description:
+        'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    content:
+        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+}))
+
+const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
+    <Space>
+        {React.createElement(icon)}
+        {text}
+    </Space>
+)
 const MoviesList = () => {
-    const { data = [], isLoading } = useFetchMovieQuery(12)
-    console.log(data, isLoading)
+    console.log(useFetchMovieQuery(12))
     const { login, password } = useAppSelector((state) => state.movies.user)
     if (!login && !password) return <Navigate to={'/auth'} />
     return (
         <>
-            <SearchAppBar />
-            <div>
-                <div
-                    style={{
-                        display: 'flex',
-                        margin: '10px',
-                        justifyContent: 'space-between',
+            <Header />
+            <section>
+                <List
+                    itemLayout="vertical"
+                    size="large"
+                    pagination={{
+                        onChange: (page) => {
+                            console.log(page)
+                        },
+                        pageSize: 3,
                     }}
-                >
-                    <div>
-                        <FloatingActionButtonExtendedSize>
-                            По году
-                        </FloatingActionButtonExtendedSize>
-                        <FloatingActionButtonExtendedSize>
-                            По стране
-                        </FloatingActionButtonExtendedSize>
-                        <FloatingActionButtonExtendedSize>
-                            По возрастному рейтингу
-                        </FloatingActionButtonExtendedSize>
-                    </div>
-                    <BasicSelect />
-                </div>
-                <div>
-                    <ul
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                        }}
-                    >
-                        <li style={{ border: '1px solid black' }}>
-                            <CardContent>
-                                <Typography
-                                    sx={{ fontSize: 14 }}
-                                    color="text.secondary"
-                                    gutterBottom
-                                >
-                                    adw
-                                </Typography>
-                                <Typography variant="h5" component="div">
-                                    awd
-                                </Typography>
-                                <Typography
-                                    sx={{ mb: 1.5 }}
-                                    color="text.secondary"
-                                >
-                                    adjective
-                                </Typography>
-                                <Typography variant="body2">
-                                    well meaning and kindly.
-                                    <br />
-                                    {'"a benevolent smile"'}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small">Learn More</Button>
-                            </CardActions>
-                        </li>
-                    </ul>
-                </div>
-                <div style={{ position: 'fixed', bottom: '10vh', left: '45%' }}>
-                    <Pagination count={10} />
-                </div>
-            </div>
+                    dataSource={data}
+                    footer={<div>FOOTER</div>}
+                    renderItem={(item) => (
+                        <List.Item
+                            key={item.title}
+                            actions={[
+                                <IconText
+                                    icon={StarOutlined}
+                                    text="156"
+                                    key="list-vertical-star-o"
+                                />,
+                                <IconText
+                                    icon={LikeOutlined}
+                                    text="156"
+                                    key="list-vertical-like-o"
+                                />,
+                                <IconText
+                                    icon={MessageOutlined}
+                                    text="2"
+                                    key="list-vertical-message"
+                                />,
+                            ]}
+                            extra={
+                                <img
+                                    width={272}
+                                    alt="logo"
+                                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                                />
+                            }
+                        >
+                            <List.Item.Meta
+                                avatar={<Avatar src={item.avatar} />}
+                                title={<a href={item.href}>{item.title}</a>}
+                                description={item.description}
+                            />
+                            {item.content}
+                        </List.Item>
+                    )}
+                />
+            </section>
         </>
     )
 }

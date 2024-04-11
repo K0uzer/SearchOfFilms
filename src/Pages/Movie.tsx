@@ -1,16 +1,13 @@
 import React from 'react'
-import SearchAppBar from '../UI/SearchAppBar'
-import { Button } from '@mui/material'
-import { useNavigate } from 'react-router'
+import { Navigate } from 'react-router'
+import { useAppSelector } from '../app/hooks'
 
 const Movie = () => {
-    const navigate = useNavigate()
-
-    const handlePath = () => navigate('/')
+    const { login, password } = useAppSelector((state) => state.movies.user)
+    if (!login && !password) return <Navigate to={'/auth'} />
 
     return (
         <div>
-            <SearchAppBar />
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>
                     <p>Название фильма</p>
@@ -35,14 +32,6 @@ const Movie = () => {
                     </ul>
                 </div>
             </div>
-            <Button
-                type="button"
-                style={{ margin: '10px' }}
-                variant="contained"
-                onClick={handlePath}
-            >
-                Назад
-            </Button>
             <ul>
                 <li>Карусель списка фильмов, похожих на текущий</li>
             </ul>
