@@ -1,83 +1,250 @@
 import React from 'react'
 import { useAppSelector } from '../app/hooks'
-import { Navigate } from 'react-router'
-import { useFetchMovieQuery } from '../api/kinopoiskApi'
-import { Avatar, List, Space } from 'antd'
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
+import { Navigate, useNavigate } from 'react-router'
+import { useGetMoviesByNameQuery } from '../api/kinopoiskApi'
+import { Card, Pagination } from 'antd'
 import Header from '../Components/Header'
+import Meta from 'antd/es/card/Meta'
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${i}`,
-    description:
-        'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}))
-
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
-)
 const MoviesList = () => {
-    console.log(useFetchMovieQuery(12))
+    console.log(useGetMoviesByNameQuery('int').data)
+    const navigate = useNavigate()
     const { login, password } = useAppSelector((state) => state.movies.user)
+
     if (!login && !password) return <Navigate to={'/auth'} />
+
+    const handlePath = (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        evt.preventDefault()
+        return navigate('/movie')
+    }
+
     return (
         <>
             <Header />
             <section>
-                <List
-                    itemLayout="vertical"
-                    size="large"
-                    pagination={{
-                        onChange: (page) => {
-                            console.log(page)
-                        },
-                        pageSize: 3,
-                    }}
-                    dataSource={data}
-                    footer={<div>FOOTER</div>}
-                    renderItem={(item) => (
-                        <List.Item
-                            key={item.title}
-                            actions={[
-                                <IconText
-                                    icon={StarOutlined}
-                                    text="156"
-                                    key="list-vertical-star-o"
-                                />,
-                                <IconText
-                                    icon={LikeOutlined}
-                                    text="156"
-                                    key="list-vertical-like-o"
-                                />,
-                                <IconText
-                                    icon={MessageOutlined}
-                                    text="2"
-                                    key="list-vertical-message"
-                                />,
-                            ]}
-                            extra={
+                <ul style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
                                 <img
-                                    width={272}
-                                    alt="logo"
-                                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
                                 />
                             }
                         >
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.avatar} />}
-                                title={<a href={item.href}>{item.title}</a>}
-                                description={item.description}
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
                             />
-                            {item.content}
-                        </List.Item>
-                    )}
-                />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                    <li
+                        onClick={(evt) => handlePath(evt)}
+                        style={{ margin: 10 }}
+                    >
+                        <Card
+                            hoverable
+                            style={{ width: 350 }}
+                            cover={
+                                <img
+                                    alt="example"
+                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                />
+                            }
+                        >
+                            <Meta
+                                title="Europe Street beat"
+                                description="www.instagram.com"
+                            />
+                        </Card>
+                    </li>
+                </ul>
+                <Pagination defaultCurrent={1} total={50} />
             </section>
         </>
     )
