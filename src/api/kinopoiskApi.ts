@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Movie, QueryParams, ResponseMovies } from '../types/types'
 
 const apiBaseUrl = 'https://api.kinopoisk.dev/'
-const apiKey = 'WF76VQQ-HQB4P5G-JFJH8DF-CRKDP1M'
+const apiKey = ''
 
 export const moviesApi = createApi({
     reducerPath: 'moviesApi',
