@@ -1,17 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { QueryParams } from '../../types/types'
 
-export interface MoviesState {
+interface MoviesState {
     user: {
-        login: string,
+        login: string
         password: string
     }
+    queryParams: QueryParams
+    openReview: boolean
 }
 
 const initialState: MoviesState = {
     user: {
-        login: '',
-        password: ''
-    }
+        login: 'user',
+        password: 'user',
+    },
+    queryParams: {
+        query: '',
+        page: 1,
+        limit: 10,
+        year: '',
+        country: '',
+        rate: 0,
+    },
+    openReview: false,
 }
 
 export const moviesSlice = createSlice({
@@ -21,10 +33,12 @@ export const moviesSlice = createSlice({
         updateUser: (state, action) => {
             state.user = action.payload
         },
+        updateQueryParams: (state, action) => {
+            state.queryParams = action.payload
+        },
     },
 })
 
-// Action creators are generated for each case reducer function
-export const { updateUser } = moviesSlice.actions
+export const { updateUser, updateQueryParams } = moviesSlice.actions
 
 export default moviesSlice.reducer

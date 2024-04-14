@@ -1,23 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { Movie, QueryParams, ResponseMovies } from '../types/types'
 
-// const baseQuery = fetchBaseQuery({
-//     baseUrl: 'https://api.kinopoisk.dev/v1.4',
-//     prepareHeaders: (headers) =>
-//         headers.set('Authorization', 'WF76VQQ-HQB4P5G-JFJH8DF-CRKDP1M'),
-// })
-
-// export const apiSlice = createApi({
-//     reducerPath: 'kinopoiskApi',
-//     baseQuery: baseQuery,
-//     endpoints: (builder) => ({
-//         fetchMovie: builder.query({
-//             query: (name) => `search?page=1&limit=10&query=${name}`,
-//             transformResponse: (response) => response,
-//         }),
-//     }),
-// })
-
-const apiBaseUrl = 'https://api.kinopoisk.dev/v1.4'
+const apiBaseUrl = 'https://api.kinopoisk.dev/'
 const apiKey = 'WF76VQQ-HQB4P5G-JFJH8DF-CRKDP1M'
 
 export const moviesApi = createApi({
@@ -31,11 +15,33 @@ export const moviesApi = createApi({
     }),
     tagTypes: ['Movies'],
     endpoints: (builder) => ({
-        getMoviesByName: builder.query({
-            query: (title: string) => `movie/search?page=1&limit=10&query=${title}`,
+        getMovies: builder.query({
+            query: ({ page = 1, limit = 10, query = '' }: QueryParams) =>
+                `v1.4/movie/search?page=${page}&limit=${limit}&query=${query}`,
             providesTags: ['Movies'],
+            transformResponse: (response: ResponseMovies) => response.docs,
+        }),
+        getMovie: builder.query({
+            query: (movieId) => `v1.4/movie/${movieId}`,
+            providesTags: ['Movies'],
+            transformResponse: (response: Movie) => response,
+        }),
+        getReview: builder.query({
+            query: (movieId) => `v1.4/review?${movieId}`,
+            providesTags: ['Movies'],
+            transformResponse: (response) => response.docs,
+        }),
+        getPosters: builder.query({
+            query: (movieId) => `v1.4/image?${movieId}`,
+            providesTags: ['Movies'],
+            transformResponse: (response) => response.docs,
         }),
     }),
 })
 
-export const { useGetMoviesByNameQuery } = moviesApi
+export const {
+    useGetMoviesQuery,
+    useGetMovieQuery,
+    useGetPostersQuery,
+    useGetReviewQuery,
+} = moviesApi

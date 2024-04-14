@@ -1,25 +1,45 @@
-// import React from 'react'
-import { Button, Input } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
+import { Input, Select } from 'antd'
 import '../index.css'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { updateQueryParams } from '../features/movies/moviesSlice'
 
 const Header = () => {
-    const { movieSearch, setMovieSearch } = useState('')
+    const { queryParams } = useAppSelector(({ movies }) => movies)
+
+    const dispatch = useAppDispatch()
+
     return (
         <header>
-            <img className="header-icon" src="../5595932_55548.jpg" alt="" />
             <h1>Мой любимый фильм!🤩</h1>
-            <form>
-                <Input
-                    placeholder="Поиск"
-                    onChange={(evt) => setMovieSearch(evt.target.value)}
-                    value={movieSearch}
-                />
-                <Button type="dashed" icon={<SearchOutlined />}>
-                    Search
-                </Button>
-            </form>
+            <Input
+                placeholder="Поиск"
+                onChange={(evt) =>
+                    dispatch(
+                        updateQueryParams({
+                            ...queryParams,
+                            query: evt.target.value,
+                        }),
+                    )
+                }
+            />
+            <Select
+                defaultValue=""
+                style={{ width: 120 }}
+                allowClear
+                options={[{ value: 1998, label: 1998 }]}
+                onChange={(value) =>
+                    dispatch(updateQueryParams({ ...queryParams, year: value }))
+                }
+            />
+            <Select
+                defaultValue=""
+                style={{ width: 120 }}
+                allowClear
+                options={[{ value: 18, label: '+18' }]}
+                onChange={(value) =>
+                    dispatch(updateQueryParams({ ...queryParams, rate: value }))
+                }
+            />
         </header>
     )
 }
