@@ -28,17 +28,8 @@ body {
     margin-right: 10px;
     color: #CC6633;
 }
-/* #root>section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-/* #root>section>ul {
-    list-style-type: none;
-}
-
-*/ .auth {
+.auth {
     display: flex;
     justify-content: center;
     align-items: center;
